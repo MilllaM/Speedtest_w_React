@@ -1,26 +1,24 @@
-.button-container {
+main.button-container {
   padding: 20px 20px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-content: center;
   align-items: center;
+  background-color: #80BD9E;
 }
 
-.button {
+div.button {
   width: 250px;
   height: 250px;
-  background-color: black;
-  color: white;
+  background-color: #89DA59;
   float: left;
-  font-size: 200px;
   margin: 15px 15px;
   padding: 10px 0px;
-  text-align: center;
   border-radius: 50%;
   cursor: pointer;
 }
 
 .active {
-  background-color: green;
+  background-color: grey;
 }
