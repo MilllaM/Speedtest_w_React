@@ -65,7 +65,7 @@ do {
 let newList = this.state.buttonList;
 newList.push(nextActive);
 
-//update active button state
+//update active button state, check this still
 this.setState ({
   activeButton: nextActive,
   buttonList: newList
