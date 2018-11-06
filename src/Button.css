@@ -1,17 +1,17 @@
 main.button-container {
-  padding: 20px 20px;
+  padding: 80px 20px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-content: center;
   align-items: center;
-  background-color: #80BD9E;
+  background-color: #00293c;
 }
 
 div.button {
   width: 250px;
   height: 250px;
-  background-color: #89DA59;
+  background-color: #1E656D;
   float: left;
   margin: 15px 15px;
   padding: 10px 0px;
@@ -20,5 +20,5 @@ div.button {
 }
 
 .active {
-  background-color: grey;
+  background-color: #f1f3ce;
 }
