@@ -20,31 +20,30 @@ class App extends Component {
   timerId = undefined;
   delay = 1000;
 
-//gameover is not a method but an attribute!
-  gameover = () => {
-    clearTimeout(this.timerId);
-    this.setState({
-      showGameover:true
-    });
+
+// whenever a button is pressed:
+handleClick = (btnId) => {
+  console.log("Clicked: ", btnId);
+  if (!(this.buttonList[0] === btnId)) {
+    this.gameover();
+    return;
   }
+  this.buttonList.shift(); // vai: this.buttonList.slice(1);  ???
+  this.setState(prevState => {
+    return {
+      clicks: prevState.clicks +1
+    };
+  });
+}
 
 
-
-  handleClick = (btnId) => {
-    console.log("click", btnId);
-    if(!(btnId === this.buttonList[0])) {
-      //game over
-      this.gameover();
-      return;
+  //gameover is not a method here, but an attribute!
+    gameover = () => {
+      clearTimeout(this.timerId);
+      this.setState({
+        showGameover:true
+      });
     }
-    this.buttonList = this.buttonList.slice(1);
-
-    this.setState( prevState => { //given a function as a param
-      return {
-        clicks: prevState.clicks +1
-      };
-    });
-  }
 
   next = () => {
     //check for game over
@@ -55,7 +54,6 @@ class App extends Component {
 
     //pick the next active activeButton
     let nextActive = undefined;
-    //
     do {
       nextActive = getRandomInt(1, 4);
     }
@@ -64,33 +62,34 @@ class App extends Component {
     let newList = this.buttonList;
     newList.push(nextActive);
 
-    //update active button state, check this still
+    //update active button state, check this still!
     this.setState ({ //param in setState are JS objects
-      activeButton: nextActive,
-      buttonList: newList
+      activeButton: nextActive
     });
+    this.buttonList = newList;
     console.log(this.buttonList);
 
-    //set timer for next activation
-    //we need to tell which object this method (setTimeout) belongs to  (bind method takes the object pointer)
-    //setTimeout(this.next.bind(this),1000)
-    this.delay *= 0.9;
+/* set timer for next activation
+we need to tell which object this method (setTimeout) belongs to (bind method takes the object pointer)
+Binding ensures that when we pass the method to the child component, it will still update the parent component.
+setTimeout(this.next.bind(this),1000) */
+    this.delay *= 0.95;
     this.timerId = setTimeout(this.next.bind(this), this.delay);
   }
 
   //this is called when...
   componentDidMount() {
-    setTimeout(this.next, 1500); //aloitus vasta 1,5 sec jälkeen
-    //this.next();
+    this.next();
   }
+
 
   render() {
     return (
       <div className="App">
         <main className="button-container">
           <Score score={ this.state.clicks} />
-          <Button  buttonColor="red" active ={this.state.activeButton === 1 } clickHandler={ () => this.handleClick(1)} />
-          <Button buttonColor="blue" active ={this.state.activeButton === 2 } clickHandler={ () => this.handleClick(2)} />
+          <Button active ={this.state.activeButton === 1 } clickHandler={ () => this.handleClick(1)} />
+          <Button active ={this.state.activeButton === 2 } clickHandler={ () => this.handleClick(2)} />
           <Button active ={this.state.activeButton === 3 } clickHandler={ () => this.handleClick(3)} />
           <Button active ={this.state.activeButton === 4 } clickHandler={ () => this.handleClick(4)} />
           {this.state.showGameover && <Gameover /> }
